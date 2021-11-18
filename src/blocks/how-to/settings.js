@@ -16,6 +16,7 @@ import InspectorTab, {
 } from '@Components/inspector-tabs/InspectorTab.js';
 import Range from '@Components/range/Range.js';
 import UAGImage from '@Components/image';
+import { getImageSize } from '@Utils/Helpers';
 
 import {
 	PanelBody,
@@ -135,16 +136,6 @@ const Settings = ( props ) => {
 	 */
 	const onRemoveImage = () => {
 		setAttributes( { mainimage: '' } );
-	};
-
-	const getImageSize = ( sizes ) => {
-		const sizeArr = [];
-		const arr = Object.keys( sizes );
-		for( let i = 0; i < arr.length; i++ ) {
-			const p = { value: arr[i], label: arr[i] };
-			sizeArr.push( p );
-		}
-		return sizeArr;
 	};
 
 	if ( mainimage && mainimage.sizes ) {

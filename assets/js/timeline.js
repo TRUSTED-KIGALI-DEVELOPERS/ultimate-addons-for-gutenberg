@@ -10,54 +10,54 @@ function uagbTimelineInit() {
 		return;
 	}
 	for ( let i = 0; i < timeline.length; i++ ) {
-
-		const line_inner = timeline[i].querySelector( '.uagb-timeline__line__inner' );
-		const line_outer = timeline[i].querySelector( '.uagb-timeline__line' );
-
-		const $icon_class = timeline[i].querySelectorAll( '.uagb-timeline__marker' );
-		const $card_last = timeline[i].querySelector( '.uagb-timeline__field:last-child' );
-
-		const timeline_start_icon = $icon_class[0];
-		const timeline_end_icon = $icon_class[$icon_class.length - 1];
-
-		line_outer.style.top = timeline_start_icon.offsetTop + 'px';
-		const timeline_card_height = $card_last.offsetHeight;
-
-		const last_item_top = $card_last.offsetTop;
-
-		let $last_item, parent_top;
+		
+		const lineInner = timeline[i].querySelector( '.uagb-timeline__line__inner' );
+		const lineOuter = timeline[i].querySelector( '.uagb-timeline__line' );
+		
+		const iconClass = timeline[i].querySelectorAll( '.uagb-timeline__marker' );
+		const cardLast = timeline[i].querySelector( '.uagb-timeline__field:last-child' );
+		
+		const timelineStartIcon = iconClass[0];
+		const timelineEndIcon = iconClass[iconClass.length - 1];
+		
+		lineOuter.style.top = timelineStartIcon.offsetTop + 'px';
+		const timelineCardHeight = cardLast.offsetHeight;
+		
+		const lastItemTop = cardLast.offsetTop;
+		
+		let lastItem, parentTop;
 
 		if ( timeline[i].classList.contains( 'uagb-timeline__arrow-center' ) ) {
 
-			line_outer.style.bottom = timeline_end_icon.offsetTop + 'px';
-			parent_top = last_item_top - timeline_start_icon.offsetTop;
-			$last_item = parent_top + timeline_end_icon.offsetTop;
+			lineOuter.style.bottom = timelineEndIcon.offsetTop + 'px';
+			parentTop = lastItemTop - timelineStartIcon.offsetTop;
+			lastItem = parentTop + timelineEndIcon.offsetTop;
 
 		} else if ( timeline[i].classList.contains( 'uagb-timeline__arrow-top' ) ) {
-
-			const top_height = timeline_card_height - timeline_end_icon.offsetTop;
-			line_outer.style.bottom = top_height + 'px';
-			$last_item = last_item_top;
+			
+			const topHeight = timelineCardHeight - timelineEndIcon.offsetTop;
+			lineOuter.style.bottom = topHeight + 'px';
+			lastItem = lastItemTop;
 
 		} else if ( timeline[i].classList.contains( 'uagb-timeline__arrow-bottom' ) ) {
-
-			const bottom_height = timeline_card_height - timeline_end_icon.offsetTop;
-			line_outer.style.bottom = bottom_height + 'px';
-			parent_top = last_item_top - timeline_start_icon.offsetTop;
-			$last_item = parent_top + timeline_end_icon.offsetTop;
+			
+			const bottomHeight = timelineCardHeight - timelineEndIcon.offsetTop;
+			lineOuter.style.bottom = bottomHeight + 'px';
+			parentTop = lastItemTop - timelineStartIcon.offsetTop;
+			lastItem = parentTop + timelineEndIcon.offsetTop;
 		}
-		const elementEnd = $last_item + 20;
+		const elementEnd = lastItem + 20;
 
-		const connectorHeight = 3 * $icon_class[0].offsetHeight;
+		const connectorHeight = 3 * iconClass[0].offsetHeight;
 
 		const viewportHeight = document.documentElement.clientHeight;
 
 		const viewportHeightHalf = viewportHeight / 2 + connectorHeight;
 		const elementPos = timeline[i].offsetTop;
+		
+		const newElementPos = elementPos + timelineStartIcon.offsetTop;
 
-		const new_elementPos = elementPos + timeline_start_icon.offsetTop;
-
-		let photoViewportOffsetTop = new_elementPos - window.screenY;
+		let photoViewportOffsetTop = newElementPos - window.screenY;
 
 		if ( photoViewportOffsetTop < 0 ) {
 			photoViewportOffsetTop = Math.abs( photoViewportOffsetTop );
@@ -74,71 +74,72 @@ function uagbTimelineInit() {
 				Math.abs( photoViewportOffsetTop ) <
 				elementEnd
 			) {
-				line_inner.style.height = viewportHeightHalf + photoViewportOffsetTop;
+				lineInner.style.height = viewportHeightHalf + photoViewportOffsetTop;
 
 			} else if (
 				photoViewportOffsetTop + viewportHeightHalf >=
 				elementEnd
 			) {
-				line_inner.style.height = elementEnd;
+				lineInner.style.height = elementEnd;
 			}
 		} else if (
 			photoViewportOffsetTop + viewportHeightHalf <
 			elementEnd
 		) {
 			if ( 0 > photoViewportOffsetTop ) {
-				line_inner.style.height = viewportHeightHalf - Math.abs( photoViewportOffsetTop );
+				lineInner.style.height = viewportHeightHalf - Math.abs( photoViewportOffsetTop );
 			} else {
-				line_inner.style.height = viewportHeightHalf + photoViewportOffsetTop;
+				lineInner.style.height = viewportHeightHalf + photoViewportOffsetTop;
 			}
 		} else if (
 			photoViewportOffsetTop + viewportHeightHalf >= elementEnd
 		) {
-			line_inner.style.height = elementEnd;
+			lineInner.style.height = elementEnd;
 		}
 
 		// Icon bg color and icon color
-		let timeline_icon_pos, timeline_card_pos;
-		let timeline_icon_top, timeline_card_top;
-		const timeline_icon = timeline[i].querySelectorAll( '.uagb-timeline__marker' );
+		
+		let timelineIconPos, timelineCardPos;
+		let timelineIconTop, timelineCardTop;
+		const timelineIcon = timeline[i].querySelectorAll( '.uagb-timeline__marker' );
+		
+		let animateBorder = timeline[i].querySelectorAll( '.uagb-timeline__field-wrap' );
 
-		let animate_border = timeline[i].querySelectorAll( '.uagb-timeline__field-wrap' );
-
-		if ( animate_border.length === 0 ) {
-			animate_border = timeline[i].querySelectorAll( '.uagb-timeline__animate-border' );
+		if ( animateBorder.length === 0 ) {
+			animateBorder = timeline[i].querySelectorAll( '.uagb-timeline__animate-border' );
 		}
 
-		for ( let j = 0; j < timeline_icon.length; j++ ) {
-			timeline_icon_pos = timeline_icon[j].offsetTop;
+		for ( let j = 0; j < timelineIcon.length; j++ ) {
+			timelineIconPos = timelineIcon[j].offsetTop;
 
-			timeline_card_pos = animate_border[j].offsetTop;
+			timelineCardPos = animateBorder[j].offsetTop;
 
-			timeline_icon_top = timeline_icon_pos;
-			timeline_card_top = timeline_card_pos;
+			timelineIconTop = timelineIconPos;
+			timelineCardTop = timelineCardPos;
 
-			if ( timeline_card_top < viewportHeightHalf ) {
-				animate_border[j].classList.remove( 'out-view' );
-				animate_border[j].classList.add( 'in-view' );
+			if ( timelineCardTop < viewportHeightHalf ) {
+				animateBorder[j].classList.remove( 'out-view' );
+				animateBorder[j].classList.add( 'in-view' );
 			} else {
 				// Remove classes if element is below than half of viewport.
-				animate_border[j].classList.add( 'out-view' );
-				animate_border[j].classList.remove( 'in-view' );
+				animateBorder[j].classList.add( 'out-view' );
+				animateBorder[j].classList.remove( 'in-view' );
 			}
 
-			if ( timeline_icon_top < viewportHeightHalf ) {
+			if ( timelineIconTop < viewportHeightHalf ) {
 				// Add classes if element is above than half of viewport.
-				timeline_icon[j].classList.remove(
+				timelineIcon[j].classList.remove(
 					'uagb-timeline__out-view-icon'
 				);
-				timeline_icon[j].classList.add(
+				timelineIcon[j].classList.add(
 					'uagb-timeline__in-view-icon'
 				);
 			} else {
 				// Remove classes if element is below than half of viewport.
-				timeline_icon[j].classList.add(
+				timelineIcon[j].classList.add(
 					'uagb-timeline__out-view-icon'
 				);
-				timeline_icon[j].classList.remove(
+				timelineIcon[j].classList.remove(
 					'uagb-timeline__in-view-icon'
 				);
 			}

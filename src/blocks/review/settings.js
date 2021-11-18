@@ -16,6 +16,7 @@ import InspectorTab, {
 import UAGImage from '@Components/image';
 import SpacingControl from '@Components/spacing-control';
 import MultiButtonsControl from '@Components/multi-buttons-control';
+import { getImageSize } from '@Utils/Helpers';
 
 import {
 	PanelBody,
@@ -221,16 +222,6 @@ const Settings = ( props ) => {
 
 	const toggleTarget = () => {
 		setAttributes( { ctaTarget: ! ctaTarget } );
-	};
-
-	const getImageSize = ( sizes ) => {
-		const sizeArr = [];
-		const arr = Object.keys( sizes );
-		for( let i = 0; i < arr.length; i++ ) {
-			const p = { value: arr[i], label: arr[i] };
-			sizeArr.push( p );
-		}
-		return sizeArr;
 	};
 
 	const authorSettings = () => {

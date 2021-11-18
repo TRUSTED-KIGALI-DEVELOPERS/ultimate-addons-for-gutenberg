@@ -21,7 +21,7 @@ import {
 	BlockControls,
 	InspectorControls,
 } from '@wordpress/block-editor';
-
+import { getImageSize } from '@Utils/Helpers';
 import {
 	PanelBody,
 	SelectControl,
@@ -216,16 +216,6 @@ const Settings = ( props ) => {
 			imageSizeOptions = new_img;
 		}
 		setAttributes( { iconImage: media } );
-	};
-
-	const getImageSize = ( sizes ) => {
-		const sizeArr = [];
-		const arr = Object.keys( sizes );
-		for( let i = 0; i < arr.length; i++ ) {
-			const p = { value: arr[i], label: arr[i] };
-			sizeArr.push( p );
-		}
-		return sizeArr;
 	};
 
 	/*

@@ -6,15 +6,14 @@ UAGBInlineNotice = { // eslint-disable-line no-undef
 		if( main.length === 0 ){
 			return;
 		}
-
-		const unique_id = attr.c_id;
-		const is_cookie = attr.cookies;
-		const cookies_days = attr.close_cookie_days;
-		const current_cookie = Cookies.get( 'uagb-notice-' + unique_id );
-
+		
+		const uniqueId = attr.c_id;
+		const isCookie = attr.cookies;
+		const cookiesDays = attr.close_cookie_days;
+		const currentCookie = Cookies.get( 'uagb-notice-' + uniqueId );
 
 		for( let i = 0; i < main.length; i++ ){
-			if ( 'undefined' === typeof current_cookie && true === is_cookie ) {
+			if ( 'undefined' === typeof currentCookie && true === isCookie ) {
 				main[i].style.display = 'block';
 			}
 
@@ -22,11 +21,11 @@ UAGBInlineNotice = { // eslint-disable-line no-undef
 
 			if ( attr.noticeDismiss !== '' ) {
 				closeBtn.addEventListener( 'click', function () {
-					if ( true === is_cookie && 'undefined' === typeof current_cookie ) {
+					if ( true === isCookie && 'undefined' === typeof currentCookie ) {
 						Cookies.set(
-							'uagb-notice-' + unique_id,
+							'uagb-notice-' + uniqueId,
 							true,
-							{ expires: cookies_days }
+							{ expires: cookiesDays }
 						);
 					}
 
